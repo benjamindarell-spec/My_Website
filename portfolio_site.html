@@ -1,0 +1,416 @@
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: var(--font-sans, sans-serif); color: var(--color-text-primary); background: transparent; font-size: 16px; }
+
+  nav {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 1.1rem 2.5rem; border-bottom: 0.5px solid var(--color-border-tertiary);
+    background: var(--color-background-primary); position: sticky; top: 0; z-index: 10;
+  }
+  .nav-logo { font-size: 16px; font-weight: 500; color: #1B2B4B; }
+  .nav-links { display: flex; gap: 2rem; }
+  .nav-links a { font-size: 14px; color: var(--color-text-secondary); text-decoration: none; cursor: pointer; transition: color 0.2s; }
+  .nav-links a:hover { color: #B87333; }
+
+  /* HERO */
+  .hero { display: grid; grid-template-columns: 1fr 1fr; min-height: 460px; }
+  .hero-left { background: #1B2B4B; padding: 4.5rem 3.5rem; display: flex; flex-direction: column; justify-content: center; }
+  .hero-tag { display: inline-block; font-size: 12px; letter-spacing: 0.1em; color: #D4A96A; text-transform: uppercase; border: 0.5px solid #D4A96A; padding: 5px 14px; border-radius: 20px; margin-bottom: 1.5rem; width: fit-content; }
+  .hero-left h1 { font-size: 42px; font-weight: 500; color: #fff; line-height: 1.2; margin-bottom: 1.1rem; }
+  .hero-left p { font-size: 16px; color: #A8B8D0; line-height: 1.8; margin-bottom: 2rem; }
+  .hero-btns { display: flex; gap: 10px; flex-wrap: wrap; }
+  .btn-light { background: #fff; color: #1B2B4B; border: none; padding: 11px 26px; border-radius: 6px; font-size: 14px; cursor: pointer; transition: opacity 0.2s; }
+  .btn-light:hover { opacity: 0.85; }
+  .btn-ghost { background: transparent; color: #fff; border: 0.5px solid rgba(255,255,255,0.4); padding: 11px 26px; border-radius: 6px; font-size: 14px; cursor: pointer; transition: border-color 0.2s; }
+  .btn-ghost:hover { border-color: #D4A96A; color: #D4A96A; }
+
+  .hero-right { background: #243550; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 3rem; gap: 2rem; }
+  .hero-exp-label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: #6A8AAA; }
+  .hero-logos { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; width: 100%; max-width: 280px; }
+  .hero-logo-pill { background: rgba(255,255,255,0.06); border: 0.5px solid rgba(255,255,255,0.12); border-radius: 10px; padding: 10px 14px; display: flex; align-items: center; justify-content: center; min-height: 44px; transition: background 0.2s; cursor: pointer; }
+  .hero-logo-pill:hover { background: rgba(255,255,255,0.13); }
+  .hero-logo-pill span { font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.75); letter-spacing: 0.01em; }
+
+  /* SECTIONS */
+  .section { padding: 4.5rem 2.5rem; max-width: 820px; margin: 0 auto; }
+  .section-label { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #B87333; margin-bottom: 0.5rem; }
+  h2 { font-size: 28px; font-weight: 500; color: #1B2B4B; margin-bottom: 1.8rem; }
+  .divider { border: none; border-top: 0.5px solid var(--color-border-tertiary); margin: 0; }
+
+  /* ABOUT */
+  .about-grid { display: grid; grid-template-columns: 230px 1fr; gap: 3rem; align-items: start; }
+  .about-card { background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: 12px; padding: 1.6rem; }
+  .about-card-avatar { width: 64px; height: 64px; border-radius: 50%; background: #D4C4B0; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 500; color: #1B2B4B; margin-bottom: 1rem; }
+  .about-card-name { font-size: 16px; font-weight: 500; color: #1B2B4B; margin-bottom: 2px; }
+  .about-card-title { font-size: 13px; color: #B87333; margin-bottom: 1rem; }
+  .about-card-meta { font-size: 13px; color: var(--color-text-secondary); line-height: 2.2; }
+  .about-card-meta a { color: #B87333; text-decoration: none; }
+  .about-text p { font-size: 15px; color: var(--color-text-secondary); line-height: 1.9; margin-bottom: 1.1rem; }
+
+  /* COMPANIES STRIP */
+  .companies-strip { display: none; }
+  .companies-inner { max-width: 820px; margin: 0 auto; }
+  .companies-label { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-text-secondary); margin-bottom: 1.4rem; text-align: center; }
+  .companies-logos { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 2.5rem; }
+  .company-logo-wrap { display: flex; flex-direction: column; align-items: center; gap: 8px; opacity: 0.75; transition: opacity 0.2s; }
+  .company-logo-wrap:hover { opacity: 1; }
+  .company-logo-wrap img { height: 28px; width: auto; max-width: 100px; object-fit: contain; filter: grayscale(1); transition: filter 0.2s; }
+  .company-logo-wrap:hover img { filter: grayscale(0); }
+  .company-logo-wrap span { font-size: 11px; color: var(--color-text-secondary); }
+
+  /* PROJECTS */
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; }
+  .project-card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: 12px; padding: 1.5rem; transition: border-color 0.2s; }
+  .project-card:hover { border-color: #B87333; }
+  .project-icon { width: 38px; height: 38px; border-radius: 8px; background: #EEF2F8; display: flex; align-items: center; justify-content: center; font-size: 18px; margin-bottom: 1rem; }
+  .project-card h3 { font-size: 15px; font-weight: 500; color: #1B2B4B; margin-bottom: 7px; }
+  .project-card p { font-size: 13px; color: var(--color-text-secondary); line-height: 1.75; }
+  .project-tag { display: inline-block; font-size: 11px; margin-top: 10px; padding: 3px 9px; border-radius: 4px; background: #F4EDE4; color: #8A5C00; }
+
+  /* SKILLS */
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+  .skill-card { background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: 10px; padding: 1.1rem 1.2rem; }
+  .skill-card h3 { font-size: 14px; font-weight: 500; color: #1B2B4B; margin-bottom: 5px; }
+  .skill-card p { font-size: 12px; color: var(--color-text-secondary); line-height: 1.65; }
+
+  .lang-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; margin-top: 1.8rem; }
+  .lang-card { background: var(--color-background-secondary); border: 0.5px solid var(--color-border-tertiary); border-radius: 10px; padding: 0.9rem 1rem; }
+  .lang-name { font-size: 14px; font-weight: 500; color: #1B2B4B; }
+  .lang-level { font-size: 12px; color: #7A6E63; margin-top: 3px; }
+
+  /* EXPERIENCE */
+  .tabs { display: flex; gap: 8px; margin-bottom: 2rem; }
+  .tab { padding: 7px 18px; border-radius: 20px; border: 0.5px solid var(--color-border-secondary); font-size: 14px; cursor: pointer; background: transparent; color: var(--color-text-secondary); transition: all 0.2s; }
+  .tab.active { background: #1B2B4B; color: #fff; border-color: #1B2B4B; }
+
+  .timeline { position: relative; padding-left: 1.5rem; }
+  .timeline::before { content: ''; position: absolute; left: 0; top: 6px; bottom: 6px; width: 1px; background: #E8DDD0; }
+  .timeline-item { position: relative; margin-bottom: 2.2rem; }
+  .timeline-dot { position: absolute; left: -1.7rem; top: 6px; width: 11px; height: 11px; border-radius: 50%; background: #B87333; border: 2px solid var(--color-background-primary); }
+  .timeline-header { display: flex; align-items: center; gap: 12px; margin-bottom: 4px; }
+  .timeline-logo-fallback { width: 32px; height: 32px; border-radius: 6px; background: #EEF2F8; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 500; color: #1B2B4B; flex-shrink: 0; border: 0.5px solid var(--color-border-tertiary); }
+  .timeline-date { font-size: 12px; color: #B87333; margin-bottom: 3px; letter-spacing: 0.04em; }
+  .timeline-title { font-size: 16px; font-weight: 500; color: #1B2B4B; margin-bottom: 2px; }
+  .timeline-company { font-size: 13px; color: #7A6E63; margin-bottom: 7px; }
+  .timeline-desc { font-size: 14px; color: var(--color-text-secondary); line-height: 1.75; }
+  .award-badge { display: inline-block; background: #FFF8EC; color: #8A5C00; border: 0.5px solid #E8C97A; border-radius: 6px; font-size: 11px; padding: 2px 9px; margin-left: 6px; vertical-align: middle; }
+
+  /* CONTACT */
+  .contact-box { background: #1B2B4B; border-radius: 14px; padding: 3.5rem; text-align: center; }
+  .contact-box h3 { font-size: 24px; font-weight: 500; color: #fff; margin-bottom: 0.8rem; }
+  .contact-box p { font-size: 16px; color: #A8B8D0; margin-bottom: 2rem; line-height: 1.75; }
+  .contact-links { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+  .contact-link { display: inline-flex; align-items: center; gap: 6px; padding: 10px 22px; border: 0.5px solid rgba(255,255,255,0.2); border-radius: 6px; font-size: 14px; color: #fff; text-decoration: none; background: rgba(255,255,255,0.07); cursor: pointer; transition: border-color 0.2s, background 0.2s; }
+  .contact-link:hover { border-color: #D4A96A; background: rgba(212,169,106,0.1); color: #D4A96A; }
+
+  footer { text-align: center; padding: 1.5rem; font-size: 13px; color: var(--color-text-secondary); border-top: 0.5px solid var(--color-border-tertiary); }
+</style>
+
+<nav>
+  <div class="nav-logo">Benjamin Darell</div>
+  <div class="nav-links">
+    <a onclick="document.getElementById('about').scrollIntoView({behavior:'smooth'})">About</a>
+    <a onclick="document.getElementById('projects').scrollIntoView({behavior:'smooth'})">Projects</a>
+    <a onclick="document.getElementById('skills').scrollIntoView({behavior:'smooth'})">Skills</a>
+    <a onclick="document.getElementById('experience').scrollIntoView({behavior:'smooth'})">Experience</a>
+    <a onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Contact</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">Business Controller, Oslo, Norway</div>
+    <h1>Hi, I am<br>Benjamin Darell</h1>
+    <p>Finance professional turning data into decisions. I build the tools and frameworks that help organisations grow with clarity and confidence.</p>
+    <div class="hero-btns">
+      <button class="btn-light" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get in touch</button>
+      <button class="btn-ghost" onclick="document.getElementById('projects').scrollIntoView({behavior:'smooth'})">See my work</button>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img src="https://i.postimg.cc/JhsWX69W/Benjamin-Darell-4.jpg" style="width:150px;height:150px;border-radius:50%;object-fit:cover;object-position:center top;border:3px solid rgba(212,169,106,0.4);" alt="Benjamin Darell">
+    <div class="hero-exp-label">Experience from</div>
+    <div class="hero-logos">
+      <div class="hero-logo-pill" onclick="jumpTo('exp-lm')"><span>Link Mobility</span></div>
+      <div class="hero-logo-pill" onclick="jumpTo('exp-ey')"><span>EY</span></div>
+      <div class="hero-logo-pill" onclick="jumpTo('exp-nordea')"><span>Nordea</span></div>
+      <div class="hero-logo-pill" onclick="jumpTo('exp-worldline')"><span>Worldline</span></div>
+      <div class="hero-logo-pill" onclick="jumpTo('exp-nhh')"><span>NHH</span></div>
+      <div class="hero-logo-pill" onclick="jumpTo('exp-kjell')"><span>Kjell and Co.</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="companies-strip">
+  <div class="companies-inner">
+    <div class="companies-label">Experience at</div>
+    <div class="companies-logos">
+      <div class="company-logo-wrap">
+        <img src="https://logo.clearbit.com/linkmobility.com" alt="Link Mobility" onerror="this.style.display='none';this.nextSibling.style.display='flex'">
+        <div class="timeline-logo-fallback" style="display:none;width:60px;height:28px;border-radius:4px;">LM</div>
+        <span>Link Mobility</span>
+      </div>
+      <div class="company-logo-wrap">
+        <img src="https://logo.clearbit.com/ey.com" alt="EY" onerror="this.style.display='none';this.nextSibling.style.display='flex'">
+        <div class="timeline-logo-fallback" style="display:none;width:60px;height:28px;border-radius:4px;">EY</div>
+        <span>EY</span>
+      </div>
+      <div class="company-logo-wrap">
+        <img src="https://logo.clearbit.com/nordea.com" alt="Nordea" onerror="this.style.display='none';this.nextSibling.style.display='flex'">
+        <div class="timeline-logo-fallback" style="display:none;width:60px;height:28px;border-radius:4px;">Nordea</div>
+        <span>Nordea</span>
+      </div>
+      <div class="company-logo-wrap">
+        <img src="https://logo.clearbit.com/worldline.com" alt="Worldline" onerror="this.style.display='none';this.nextSibling.style.display='flex'">
+        <div class="timeline-logo-fallback" style="display:none;width:60px;height:28px;border-radius:4px;">WL</div>
+        <span>Worldline</span>
+      </div>
+      <div class="company-logo-wrap">
+        <img src="https://logo.clearbit.com/nhh.no" alt="NHH" onerror="this.style.display='none';this.nextSibling.style.display='flex'">
+        <div class="timeline-logo-fallback" style="display:none;width:60px;height:28px;border-radius:4px;">NHH</div>
+        <span>NHH</span>
+      </div>
+      <div class="company-logo-wrap">
+        <img src="https://logo.clearbit.com/kjell.com" alt="Kjell and Company" onerror="this.style.display='none';this.nextSibling.style.display='flex'">
+        <div class="timeline-logo-fallback" style="display:none;width:60px;height:28px;border-radius:4px;">K&C</div>
+        <span>Kjell and Co.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<div class="section" id="about">
+  <div class="section-label">About me</div>
+  <h2>Who I am</h2>
+  <div class="about-grid">
+    <div class="about-card">
+      <div class="about-card-avatar">BD</div>
+      <div class="about-card-name">Benjamin Darell</div>
+      <div class="about-card-title">Business Controller</div>
+      <div class="about-card-meta">
+        <span>Oslo, Norway</span>
+        <span><a href="mailto:benjamin.darell@gmail.com">benjamin.darell@gmail.com</a></span>
+        <span>+47 403 31 149</span>
+        <span><a href="https://www.linkedin.com/in/benjamindarell/" target="_blank">LinkedIn</a></span>
+      </div>
+    </div>
+    <div class="about-text">
+      <p>I am a Business Controller at Link Mobility, responsible for operational finance across the Nordic region. Educated at the Norwegian School of Economics (NHH) and part of the CEMS network, with an exchange semester at IIM Calcutta.</p>
+      <p>My work sits at the intersection of finance and technology. I build models and tools that reduce manual workload, surface hidden value, and help teams make faster, better-informed decisions.</p>
+      <p>Outside of work I am a founder, an active sportsman (bouldering, climbing, badminton), and a language enthusiast with a passion for travel and international environments.</p>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<div class="section" id="projects">
+  <div class="section-label">Selected work</div>
+  <h2>Projects</h2>
+  <div class="projects-grid">
+    <div class="project-card">
+      <div class="project-icon">&#127919;</div>
+      <h3>Northern Europe incentive model</h3>
+      <p>Designed a full incentive framework for both management and operations at Link Mobility, aligning KPIs with overhead strategy and motivating cross-functional teams.</p>
+      <span class="project-tag">Excel, Power BI</span>
+    </div>
+    <div class="project-card">
+      <div class="project-icon">&#128176;</div>
+      <h3>Pricing optimisation programme</h3>
+      <p>Built an advanced pricing model integrating volume data, margin analysis, and market benchmarks. Contributed to identifying over 3 MNOK in recovered revenue and new sales opportunities.</p>
+      <span class="project-tag">Excel, SQL, Power BI</span>
+    </div>
+    <div class="project-card">
+      <div class="project-icon">&#128269;</div>
+      <h3>Real-time web scraper</h3>
+      <p>Developed automated web scrapers to acquire real-time market and pricing data, feeding live information into financial models and reducing manual research time significantly.</p>
+      <span class="project-tag">Python, VBA</span>
+    </div>
+    <div class="project-card">
+      <div class="project-icon">&#128202;</div>
+      <h3>Commission automation</h3>
+      <p>Automated the end-to-end commission calculation and reporting process, eliminating manual errors and cutting processing time for monthly payouts across the Nordic region.</p>
+      <span class="project-tag">Power BI, Excel</span>
+    </div>
+    <div class="project-card">
+      <div class="project-icon">&#127968;</div>
+      <h3>Investica AS</h3>
+      <p>Founded a Nordic real estate investment company. Built all financial reporting, bookkeeping processes, and investment evaluation frameworks from the ground up.</p>
+      <span class="project-tag">Founder, Finance</span>
+    </div>
+    <div class="project-card">
+      <div class="project-icon">&#127807;</div>
+      <h3>ESG holdings analysis</h3>
+      <p>Conducted ESG and reputational risk analysis of investment holdings at Nordea Asset Management, directly informing a major corporate bond investment decision.</p>
+      <span class="project-tag">ESG, Credit analysis</span>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<div class="section" id="skills">
+  <div class="section-label">Expertise</div>
+  <h2>Skills and tools</h2>
+  <div class="skills-grid">
+    <div class="skill-card"><h3>Financial controlling</h3><p>Budgeting, forecasting, variance analysis, and monthly close.</p></div>
+    <div class="skill-card"><h3>Power BI</h3><p>Interactive dashboards, automated reporting, and data modelling.</p></div>
+    <div class="skill-card"><h3>Excel and VBA</h3><p>Advanced modelling, automation, and complex financial tools.</p></div>
+    <div class="skill-card"><h3>SQL and R</h3><p>Data extraction, transformation, and analytical scripting.</p></div>
+    <div class="skill-card"><h3>ERP systems</h3><p>SAP, Navision, Basware, Visma Enterprise and Visma Business.</p></div>
+    <div class="skill-card"><h3>Audit and IFRS</h3><p>Payroll controls, OPEX testing, and Norwegian GAAP.</p></div>
+    <div class="skill-card"><h3>KPI and incentive design</h3><p>Aligning performance metrics with business strategy.</p></div>
+    <div class="skill-card"><h3>ESG and credit analysis</h3><p>Holdings assessment and corporate bond credit evaluation.</p></div>
+  </div>
+
+  <div class="section-label" style="margin-top:2.5rem;">Languages</div>
+  <div class="lang-grid">
+    <div class="lang-card"><div class="lang-name">Swedish</div><div class="lang-level">Mother tongue</div></div>
+    <div class="lang-card"><div class="lang-name">Norwegian</div><div class="lang-level">Fluent</div></div>
+    <div class="lang-card"><div class="lang-name">English</div><div class="lang-level">C1</div></div>
+    <div class="lang-card"><div class="lang-name">German</div><div class="lang-level">B1</div></div>
+    <div class="lang-card"><div class="lang-name">Japanese</div><div class="lang-level">A2</div></div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<div class="section" id="experience">
+  <div class="section-label">Career</div>
+  <h2>Experience and education</h2>
+  <div class="tabs">
+    <button class="tab active" onclick="showTab('work',this)">Work</button>
+    <button class="tab" onclick="showTab('edu',this)">Education</button>
+  </div>
+
+  <div id="tab-work" class="timeline">
+    <div class="timeline-item" id="exp-lm">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">March 2025 to present</div>
+      <div class="timeline-header">
+        <div class="timeline-logo-fallback">LM</div>
+        <div class="timeline-title">Business Controller <span class="award-badge">Hire of the Year 2025</span></div>
+      </div>
+      <div class="timeline-company">Link Mobility, Oslo, Norway</div>
+      <div class="timeline-desc">Responsible for operational finance in the Nordic region. Designed the Northern Europe incentive model and built automated Power BI and Excel tools for pricing, volume reporting, and commissions. Delivered significant recovered value and new sales opportunities in the first year.</div>
+    </div>
+    <div class="timeline-item" id="exp-ey">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">August 2024 to present</div>
+      <div class="timeline-header">
+        <div class="timeline-logo-fallback">EY</div>
+        <div class="timeline-title">Audit Associate</div>
+      </div>
+      <div class="timeline-company">EY, Oslo, Norway</div>
+      <div class="timeline-desc">Payroll control processes for large public entities across the seafood industry, shipping, and NGOs. Detailed OPEX and income account testing with cross-country collaboration.</div>
+    </div>
+    <div class="timeline-item" id="exp-investica">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">February 2022 to present</div>
+      <div class="timeline-header">
+        <div class="timeline-logo-fallback">IN</div>
+        <div class="timeline-title">Founder</div>
+      </div>
+      <div class="timeline-company">Investica AS, Norway</div>
+      <div class="timeline-desc">Founded a Nordic real estate investment company. Manages all bookkeeping, financial reporting, and investment decisions independently.</div>
+    </div>
+    <div class="timeline-item" id="exp-nordea">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">June 2023 to August 2023</div>
+      <div class="timeline-header">
+        <div class="timeline-logo-fallback">NO</div>
+        <div class="timeline-title">Summer Analyst</div>
+      </div>
+      <div class="timeline-company">Nordea Asset Management, Oslo, Norway</div>
+      <div class="timeline-desc">ESG analysis of holdings and reputational risk assessments. Credit analysis of corporate bonds, contributing to a significant Australian bond investment decision.</div>
+    </div>
+    <div class="timeline-item" id="exp-worldline">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">June 2022 to August 2022</div>
+      <div class="timeline-header">
+        <div class="timeline-logo-fallback">WL</div>
+        <div class="timeline-title">Accounting and Consolidation Intern</div>
+      </div>
+      <div class="timeline-company">Worldline, Nordic region</div>
+      <div class="timeline-desc">Managed all payables for Bambora Device AB (200 MSEK revenue). Accruals, manual bookkeeping, and bank payment planning with teams across France and Romania.</div>
+    </div>
+    <div class="timeline-item" id="exp-kjell">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">September 2015 to August 2019</div>
+      <div class="timeline-header">
+        <div class="timeline-logo-fallback">KC</div>
+        <div class="timeline-title">Service Point Manager and B2B Sales Manager</div>
+      </div>
+      <div class="timeline-company">Kjell and Company Norway AS, Norway and Sweden</div>
+      <div class="timeline-desc">Contributed to the Norwegian expansion. Established 7 stores, achieved highest customer satisfaction among 121 stores in 2017, and increased B2B sales by 30% in 2019.</div>
+    </div>
+  </div>
+
+  <div id="tab-edu" class="timeline" style="display:none;">
+    <div class="timeline-item" id="exp-nhh">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">2022 to 2024</div>
+      <div class="timeline-header"><div class="timeline-logo-fallback">NHH</div><div class="timeline-title">MSc Business Analysis and Performance Management</div></div>
+      <div class="timeline-company">Norwegian School of Economics (NHH), Bergen, Norway</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">2022 to 2024</div>
+      <div class="timeline-header"><div class="timeline-logo-fallback">NHH</div><div class="timeline-title">CEMS Master in International Management</div></div>
+      <div class="timeline-company">Norwegian School of Economics (NHH), Bergen, Norway</div>
+      <div class="timeline-desc">Prestigious double degree awarded jointly by the CEMS network of top global business schools.</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">2022</div>
+      <div class="timeline-header"><div class="timeline-logo-fallback">IIM</div><div class="timeline-title">CEMS MIM Exchange</div></div>
+      <div class="timeline-company">Indian Institute of Management Calcutta, Kolkata, India</div>
+    </div>
+    <div class="timeline-item">
+      <div class="timeline-dot"></div>
+      <div class="timeline-date">2019 to 2022</div>
+      <div class="timeline-header"><div class="timeline-logo-fallback">NHH</div><div class="timeline-title">Bachelor in Business and Administration</div></div>
+      <div class="timeline-company">Norwegian School of Economics (NHH), Bergen, Norway</div>
+    </div>
+  </div>
+</div>
+
+<hr class="divider">
+
+<div class="section" id="contact" style="max-width:100%; padding: 4rem 2.5rem;">
+  <div style="max-width: 820px; margin: 0 auto;">
+    <div class="contact-box">
+      <h3>Open to new opportunities</h3>
+      <p>Looking for a skilled Business Controller or want to explore a collaboration? I would love to hear from you.</p>
+      <div class="contact-links">
+        <a class="contact-link" href="mailto:benjamin.darell@gmail.com">benjamin.darell@gmail.com</a>
+        <a class="contact-link" href="https://www.linkedin.com/in/benjamindarell/" target="_blank">LinkedIn</a>
+        <a class="contact-link" href="tel:+4740331149">+47 403 31 149</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>2026 Benjamin Darell, Business Controller, Oslo, Norway</footer>
+
+<script>
+function showTab(t, btn) {
+  document.getElementById('tab-work').style.display = t === 'work' ? 'block' : 'none';
+  document.getElementById('tab-edu').style.display = t === 'edu' ? 'block' : 'none';
+  document.querySelectorAll('.tab').forEach(x => x.classList.remove('active'));
+  btn.classList.add('active');
+}
+function jumpTo(id) {
+  var isEdu = ['exp-nhh'].includes(id);
+  var workTab = document.querySelector('.tab:first-child');
+  var eduTab = document.querySelector('.tab:last-child');
+  if (isEdu) { showTab('edu', eduTab); } else { showTab('work', workTab); }
+  document.getElementById('experience').scrollIntoView({behavior:'smooth'});
+  setTimeout(function() {
+    var el = document.getElementById(id);
+    if (el) { el.scrollIntoView({behavior:'smooth', block:'center'}); el.style.transition='background 0.4s'; el.style.background='rgba(184,115,51,0.08)'; setTimeout(function(){ el.style.background=''; }, 1200); }
+  }, 350);
+}
+</script>
